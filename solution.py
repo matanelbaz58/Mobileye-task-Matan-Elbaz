@@ -153,11 +153,13 @@ class Solution:
                 if len(components) < 4:
                     continue 
 
-                id_part = components[2] 
-                
-                if id_part == f'W, {target_id}':
-                    message_data = components[-1]
-                    return message_data.strip()
+                # Check if this line contains the target protocol
+                if target_id in line:
+                    # Extract the protocol part and check if it matches
+                    protocol_part = components[2].strip()
+                    if target_id in protocol_part:
+                        message_data = components[-1]
+                        return message_data.strip()
 
         return None
 
@@ -186,3 +188,74 @@ class Solution:
         return protocol_counts
 
 
+def main():
+    """
+    Main function to test all questions one by one
+    """
+    # Initialize the solution with file paths
+    solution = Solution("data.txt", "protocol.json")
+    
+    print("=" * 50)
+    print("MOBILEYE TASK - PROTOCOL ANALYSIS")
+    print("=" * 50)
+    
+    # Question 1: Version name
+    print("\n1. What is the version name used in the communication session?")
+    try:
+        version = solution.q1()
+        print(f"Answer: {version}")
+    except Exception as e:
+        print(f"Error in q1: {e}")
+    
+    # Question 2: Wrong frequency protocols
+    print("\n2. Which protocols have wrong messages frequency?")
+    try:
+        wrong_freq = solution.q2()
+        print(f"Answer: {wrong_freq}")
+        print(f"Count: {len(wrong_freq)} protocols")
+    except Exception as e:
+        print(f"Error in q2: {e}")
+    
+    # Question 3: Missing protocols
+    print("\n3. Which protocols are listed as relevant but missing in data?")
+    try:
+        missing = solution.q3()
+        print(f"Answer: {missing}")
+        print(f"Count: {len(missing)} protocols")
+    except Exception as e:
+        print(f"Error in q3: {e}")
+    
+    # Question 4: Extra protocols
+    print("\n4. Which protocols appear in data but not listed as relevant?")
+    try:
+        extra = solution.q4()
+        print(f"Answer: {extra}")
+        print(f"Count: {len(extra)} protocols")
+    except Exception as e:
+        print(f"Error in q4: {e}")
+    
+    # Question 5: Size mismatch protocols
+    print("\n5. Which protocols have size mismatch?")
+    try:
+        size_mismatch = solution.q5()
+        print(f"Answer: {size_mismatch}")
+        print(f"Count: {len(size_mismatch)} protocols")
+    except Exception as e:
+        print(f"Error in q5: {e}")
+    
+    # Question 6: Non-dynamic size mismatch protocols
+    print("\n6. Which non-dynamic protocols have size mismatch?")
+    try:
+        non_dynamic_mismatch = solution.q6()
+        print(f"Answer: {non_dynamic_mismatch}")
+        print(f"Count: {len(non_dynamic_mismatch)} protocols")
+    except Exception as e:
+        print(f"Error in q6: {e}")
+    
+    print("\n" + "=" * 50)
+    print("ANALYSIS COMPLETE")
+    print("=" * 50)
+
+
+if __name__ == "__main__":
+    main()
