@@ -102,7 +102,7 @@ class Solution:
                 if len(parts) < 4:
                     continue
                 try:
-                    protocol_id = parts[2].split()[1]
+                    protocol_id = parts[2]
                     if protocol_id in protocols_mismatch_size:
                         continue           
                     size = int(parts[3].split()[0])
@@ -173,9 +173,8 @@ class Solution:
                     if '0x' in line:
                         parts = line.split(', ')
                         if len(parts) >= 3:
-                            protocol_part = parts[2]
-                            if '0x' in protocol_part:
-                                protocol = protocol_part.split()[1]
+                            protocol = parts[2]
+                            if '0x' in protocol:
                                 protocol_counts[protocol] = protocol_counts.get(protocol, 0) + 1
                                 
         except FileNotFoundError:
